@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">NotesApplication</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="welcome_to_NotesApplication">Notepad application</string>
+    <string name="nom">what is your name?</string>
+    <string name="nom_ecrit">Write your name</string>
+    <string name="text_bouton">Let\'s go</string>
 </resources>
