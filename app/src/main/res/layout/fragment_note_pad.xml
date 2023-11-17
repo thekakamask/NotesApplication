@@ -1,14 +1,176 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".NotePadFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/blue">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/menu_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:layout_marginTop="80dp">
 
-</FrameLayout>
+
+        <Button
+            android:id="@+id/button_bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/bold"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/button_italic"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"/>
+
+        <Button
+            android:id="@+id/button_italic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/italic"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toEndOf="@id/button_bold"
+            app:layout_constraintEnd_toStartOf="@id/button_underline"/>
+
+        <Button
+            android:id="@+id/button_underline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/underlined"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toEndOf="@id/button_italic"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <TextView
+            android:id="@+id/text_smiley_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/smiley"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="@id/button_smiley_wink"
+            app:layout_constraintTop_toTopOf="@id/button_smiley_wink"
+            android:layout_marginEnd="8dp"
+            android:textColor="@color/white"/>
+
+        <ImageButton
+            android:id="@+id/button_smiley_wink"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:src="@drawable/smiley_wink"
+            android:contentDescription="@string/description_smiley_wink"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            app:layout_constraintTop_toBottomOf="@id/button_underline"
+            app:layout_constraintBottom_toTopOf="@id/radio_button_layout"
+            app:layout_constraintStart_toEndOf="@id/text_smiley_label"
+            app:layout_constraintEnd_toStartOf="@id/button_smiley_smile"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"/>
+
+        <ImageButton
+            android:id="@+id/button_smiley_smile"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:src="@drawable/smiley_smile"
+            android:contentDescription="@string/description_smiley_smile"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            app:layout_constraintTop_toBottomOf="@id/button_underline"
+            app:layout_constraintBottom_toTopOf="@id/radio_button_layout"
+            app:layout_constraintStart_toEndOf="@id/button_smiley_wink"
+            app:layout_constraintEnd_toStartOf="@id/button_smiley_bigSmile"/>
+
+        <ImageButton
+            android:id="@+id/button_smiley_bigSmile"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:src="@drawable/smiley_big_smile"
+            android:contentDescription="@string/description_smiley_big_smile"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            app:layout_constraintTop_toBottomOf="@id/button_underline"
+            app:layout_constraintBottom_toTopOf="@id/radio_button_layout"
+            app:layout_constraintStart_toEndOf="@id/button_smiley_smile"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/radio_button_layout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/button_smiley_wink"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <RadioButton
+                android:id="@+id/button_color_black"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/black"
+                android:textColor="@color/white"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/button_color_blue"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+            <RadioButton
+                android:id="@+id/button_color_blue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/blue"
+                android:textColor="@color/white"
+                app:layout_constraintStart_toEndOf="@id/button_color_black"
+                app:layout_constraintEnd_toStartOf="@id/button_color_red"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+            <RadioButton
+                android:id="@+id/button_color_red"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/red"
+                android:textColor="@color/white"
+                app:layout_constraintStart_toEndOf="@id/button_color_blue"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <Button
+        android:id="@+id/button_hide"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/hide"
+        android:layout_below="@id/menu_layout"
+        android:layout_marginTop="8dp"/>
+
+    <LinearLayout
+        android:id="@+id/edit_preview_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_below="@id/button_hide"
+        android:padding="16dp">
+
+        <EditText
+            android:id="@+id/edit_text_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/edit"
+            android:layout_marginBottom="8dp"
+            android:backgroundTint="@color/white"
+            android:textColorHint="@color/white"
+            android:textColor="@color/white"
+            android:textAlignment="center"
+            android:padding="20dp"/>
+
+        <TextView
+            android:id="@+id/text_preview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/view"
+            android:background="@android:color/white"
+            android:padding="100dp"
+            android:textAlignment="center"/>
+    </LinearLayout>
+
+</RelativeLayout>
