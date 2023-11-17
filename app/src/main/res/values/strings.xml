@@ -13,7 +13,7 @@
     <string name="red">Red</string>
     <string name="black">Black</string>
     <string name="hide">Hide</string>
-    <string name="edit">Write your text</string>
+    <string name="edit">Write your text :</string>
     <string name="view">Your Text</string>
     <string name="bold">bold</string>
     <string name="italic">Italic</string>
@@ -22,5 +22,6 @@
     <string name="description_smiley_smile">smiley smile</string>
     <string name="description_smiley_wink">smiley wink</string>
     <string name="smiley">Smiley</string>
+    <string name="nothing">....</string>
 
 </resources>
