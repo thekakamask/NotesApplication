@@ -111,6 +111,14 @@
 
                 <RadioButton
                     android:padding="5dp"
+                    android:id="@+id/button_color_white"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/white"
+                    android:textColor="@color/white" />
+
+                <RadioButton
+                    android:padding="5dp"
                     android:id="@+id/button_color_black"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment;
 import android.text.Editable;
 import android.text.Spannable;
 import android.text.SpannableString;
+import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.TextWatcher;
 import android.text.style.ForegroundColorSpan;
@@ -82,6 +83,7 @@ public class NotePadFragment extends Fragment {
         TextWatcher textWatcher = getTextWatcher();
         binding.editTextInput.addTextChangedListener(textWatcher);
 
+        binding.buttonColorWhite.setOnCheckedChangeListener(this::onRadioButtonCheckedChanged);
         binding.buttonColorRed.setOnCheckedChangeListener(this::onRadioButtonCheckedChanged);
         binding.buttonColorBlack.setOnCheckedChangeListener(this::onRadioButtonCheckedChanged);
         binding.buttonColorBlue.setOnCheckedChangeListener(this::onRadioButtonCheckedChanged);
@@ -128,6 +130,13 @@ public class NotePadFragment extends Fragment {
     }
 
     private void HideMenu() {
+        if (binding.menuLayout.getVisibility() == View.VISIBLE) {
+            binding.menuLayout.setVisibility(View.GONE);
+            binding.buttonHide.setText(R.string.show);
+        } else {
+            binding.menuLayout.setVisibility(View.VISIBLE);
+            binding.buttonHide.setText(R.string.hide);
+        }
     }
 
     private void TextToUnderline() {
@@ -198,8 +207,20 @@ public class NotePadFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                binding.textPreview.setText(binding.editTextInput.getText());
+                //binding.textPreview.setText(binding.editTextInput.getText());
+                SpannableStringBuilder spannableBuilder = new SpannableStringBuilder(binding.textPreview.getText());
 
+                // Gérer l'ajout de texte
+                if (count > before) {
+                    CharSequence addedText = s.subSequence(start, start + count);
+                    spannableBuilder.replace(start, start + before, addedText);
+                }
+                // Gérer la suppression de texte
+                else if (count < before) {
+                    spannableBuilder.delete(start, start + before);
+                }
+
+                binding.textPreview.setText(spannableBuilder);
 
             }
 
@@ -211,35 +232,48 @@ public class NotePadFragment extends Fragment {
 
     private void onRadioButtonCheckedChanged(CompoundButton buttonView, boolean isChecked) {
         if (isChecked) {
-            int color;
-            if (buttonView.getId() == R.id.button_color_red) {
-                color= Color.RED;
-                applyColorToTextSelection(color);
-            } else if (buttonView.getId() == R.id.button_color_black) {
-                color=Color.BLACK;
-                applyColorToTextSelection(color);
-            } else if (buttonView.getId() == R.id.button_color_blue) {
-                color=Color.BLUE;
-                applyColorToTextSelection(color);
+            int color = Color.BLACK; // Valeur par défaut, au cas où aucun cas ne correspond
+
+            int buttonId = buttonView.getId();
+            if (buttonId == R.id.button_color_red) {
+                color = Color.RED;
+            } else if (buttonId == R.id.button_color_white) {
+                color = Color.WHITE;
+            } else if (buttonId == R.id.button_color_black) {
+                color = Color.BLACK;
+            } else if (buttonId == R.id.button_color_blue) {
+                color = Color.BLUE;
+            } else {
+                return; // Aucun RadioButton correspondant trouvé
             }
+
+            applyColorToTextSelection(color);
+
+            // Décocher le RadioButton
+            buttonView.setChecked(false);
         }
     }
+
 
     private void applyColorToTextSelection(int color) {
-        int start= binding.editTextInput.getSelectionStart();
+        int start = binding.editTextInput.getSelectionStart();
         int end = binding.editTextInput.getSelectionEnd();
-        SpannableString spannableString= new SpannableString(binding.textPreview.getText());
 
-        ForegroundColorSpan[] spans = spannableString.getSpans(start, end, ForegroundColorSpan.class);
-        for (ForegroundColorSpan span : spans) {
-            if (spannableString.getSpanStart(span) >= start && spannableString.getSpanEnd(span) <= end) {
-                spannableString.removeSpan(span);
+        if (start < end) {
+            SpannableString spannableString = new SpannableString(binding.textPreview.getText());
+            ForegroundColorSpan[] spans = spannableString.getSpans(start, end, ForegroundColorSpan.class);
+            for (ForegroundColorSpan span : spans) {
+                if (spannableString.getSpanStart(span) >= start && spannableString.getSpanEnd(span) <= end) {
+                    spannableString.removeSpan(span);
+                }
             }
-        }
 
-        spannableString.setSpan(new ForegroundColorSpan(color), start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-        binding.textPreview.setText(spannableString);
+            spannableString.setSpan(new ForegroundColorSpan(color), start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            binding.textPreview.setText(spannableString);
+
+        }
     }
+
 
     private void setupColors() {
         ColorStateList colorStateList = new ColorStateList(
@@ -256,6 +290,7 @@ public class NotePadFragment extends Fragment {
         binding.buttonColorBlack.setButtonTintList(colorStateList);
         binding.buttonColorBlue.setButtonTintList(colorStateList);
         binding.buttonColorRed.setButtonTintList(colorStateList);
+        binding.buttonColorWhite.setButtonTintList(colorStateList);
 
         binding.buttonBold.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.darkBlue));
         binding.buttonItalic.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.darkBlue));
