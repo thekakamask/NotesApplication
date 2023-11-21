@@ -99,41 +99,40 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent">
 
-            <RadioButton
-                android:padding="5dp"
-                android:id="@+id/button_color_black"
+            <RadioGroup
+                android:id="@+id/color_radio_group"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/black"
-                android:textColor="@color/white"
+                android:orientation="horizontal"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/button_color_blue"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"/>
-
-            <RadioButton
-                android:padding="5dp"
-                android:id="@+id/button_color_blue"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/blue"
-                android:textColor="@color/white"
-                app:layout_constraintStart_toEndOf="@id/button_color_black"
-                app:layout_constraintEnd_toStartOf="@id/button_color_red"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"/>
-
-            <RadioButton
-                android:padding="5dp"
-                android:id="@+id/button_color_red"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/red"
-                android:textColor="@color/white"
-                app:layout_constraintStart_toEndOf="@id/button_color_blue"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"/>
+                app:layout_constraintBottom_toBottomOf="parent">
+
+                <RadioButton
+                    android:padding="5dp"
+                    android:id="@+id/button_color_black"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/black"
+                    android:textColor="@color/white" />
+
+                <RadioButton
+                    android:padding="5dp"
+                    android:id="@+id/button_color_blue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/blue"
+                    android:textColor="@color/white" />
+
+                <RadioButton
+                    android:padding="5dp"
+                    android:id="@+id/button_color_red"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/red"
+                    android:textColor="@color/white" />
+            </RadioGroup>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -177,7 +176,8 @@
             android:textColorHint="@color/black"
             android:textColor="@color/black"
             android:background="@color/white"
-            android:padding="15dp"/>
+            android:padding="15dp"
+            android:inputType="textVisiblePassword"/>
 
     </LinearLayout>
 

@@ -2,6 +2,7 @@ package com.example.notesapplication;
 
 import android.content.res.ColorStateList;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
@@ -15,7 +16,10 @@ import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextWatcher;
+import android.text.style.ForegroundColorSpan;
 import android.text.style.ImageSpan;
+import android.text.style.StyleSpan;
+import android.text.style.UnderlineSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,6 +35,7 @@ import com.example.notesapplication.databinding.FragmentNotePadBinding;
  */
 public class NotePadFragment extends Fragment {
 
+    private int lastCheckedId = -1;
 
 
     private FragmentNotePadBinding binding;
@@ -126,12 +131,64 @@ public class NotePadFragment extends Fragment {
     }
 
     private void TextToUnderline() {
+        int start = binding.editTextInput.getSelectionStart();
+        int end = binding.editTextInput.getSelectionEnd();
+        SpannableString spannableString = new SpannableString(binding.textPreview.getText());
+
+        UnderlineSpan[] spans = spannableString.getSpans(start, end, UnderlineSpan.class);
+        boolean isUnderlined = false;
+        for (UnderlineSpan span : spans) {
+            spannableString.removeSpan(span);
+            isUnderlined = true;
+        }
+
+        if (!isUnderlined) {
+            spannableString.setSpan(new UnderlineSpan(), start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        }
+
+        binding.textPreview.setText(spannableString);
     }
 
     private void TextToItalic() {
+        int start = binding.editTextInput.getSelectionStart();
+        int end = binding.editTextInput.getSelectionEnd();
+        SpannableString spannableString = new SpannableString(binding.textPreview.getText());
+
+        StyleSpan[] spans = spannableString.getSpans(start, end, StyleSpan.class);
+        boolean isItalic = false;
+        for (StyleSpan span : spans) {
+            if (span.getStyle() == Typeface.ITALIC) {
+                spannableString.removeSpan(span);
+                isItalic = true;
+            }
+        }
+
+        if (!isItalic) {
+            spannableString.setSpan(new StyleSpan(Typeface.ITALIC), start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        }
+
+        binding.textPreview.setText(spannableString);
     }
 
     private void TextToBold() {
+        int start = binding.editTextInput.getSelectionStart();
+        int end = binding.editTextInput.getSelectionEnd();
+        SpannableString spannableString = new SpannableString(binding.textPreview.getText());
+
+        StyleSpan[] spans = spannableString.getSpans(start, end, StyleSpan.class);
+        boolean isBold = false;
+        for (StyleSpan span : spans) {
+            if (span.getStyle() == Typeface.BOLD) {
+                spannableString.removeSpan(span);
+                isBold = true;
+            }
+        }
+
+        if (!isBold) {
+            spannableString.setSpan(new StyleSpan(Typeface.BOLD), start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        }
+
+        binding.textPreview.setText(spannableString);
     }
 
     private TextWatcher getTextWatcher() {
@@ -154,14 +211,34 @@ public class NotePadFragment extends Fragment {
 
     private void onRadioButtonCheckedChanged(CompoundButton buttonView, boolean isChecked) {
         if (isChecked) {
+            int color;
             if (buttonView.getId() == R.id.button_color_red) {
-                // Logique spécifique pour le bouton rouge
+                color= Color.RED;
+                applyColorToTextSelection(color);
             } else if (buttonView.getId() == R.id.button_color_black) {
-                // Logique spécifique pour le bouton noir
+                color=Color.BLACK;
+                applyColorToTextSelection(color);
             } else if (buttonView.getId() == R.id.button_color_blue) {
-                // Logique spécifique pour le bouton bleu
+                color=Color.BLUE;
+                applyColorToTextSelection(color);
             }
         }
+    }
+
+    private void applyColorToTextSelection(int color) {
+        int start= binding.editTextInput.getSelectionStart();
+        int end = binding.editTextInput.getSelectionEnd();
+        SpannableString spannableString= new SpannableString(binding.textPreview.getText());
+
+        ForegroundColorSpan[] spans = spannableString.getSpans(start, end, ForegroundColorSpan.class);
+        for (ForegroundColorSpan span : spans) {
+            if (spannableString.getSpanStart(span) >= start && spannableString.getSpanEnd(span) <= end) {
+                spannableString.removeSpan(span);
+            }
+        }
+
+        spannableString.setSpan(new ForegroundColorSpan(color), start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        binding.textPreview.setText(spannableString);
     }
 
     private void setupColors() {

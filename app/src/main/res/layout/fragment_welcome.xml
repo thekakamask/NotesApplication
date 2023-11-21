@@ -33,10 +33,10 @@
         android:hint="@string/nom_ecrit"
         android:textColorHint="@color/white"
         android:textColor="@color/white"
-        android:inputType="text"
         android:minHeight="48dp"
         android:textAlignment="center"
-        android:backgroundTint="@color/white"/>
+        android:backgroundTint="@color/white"
+        android:inputType="textVisiblePassword"/>
 
     <Button
         android:id="@+id/button_welcome"
