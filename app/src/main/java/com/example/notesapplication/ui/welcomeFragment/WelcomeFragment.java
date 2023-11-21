@@ -1,6 +1,5 @@
-package com.example.notesapplication;
+package com.example.notesapplication.ui.welcomeFragment;
 
-import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -16,7 +15,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.notesapplication.R;
 import com.example.notesapplication.databinding.FragmentWelcomeBinding;
+import com.example.notesapplication.ui.notePadFragment.NotePadFragment;
 
 /**
  * A simple {@link Fragment} subclass.

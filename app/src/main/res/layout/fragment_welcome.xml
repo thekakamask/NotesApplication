@@ -6,7 +6,7 @@
     android:background="@color/blue"
     android:gravity="center_horizontal"
     android:orientation="vertical"
-    tools:context="WelcomeFragment">
+    tools:context=".ui.welcomeFragment.WelcomeFragment">
 
     <ImageView
         android:layout_width="wrap_content"
